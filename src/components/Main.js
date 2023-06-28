@@ -1,10 +1,10 @@
 import React from "react";
 
-function Main({ handleEditAvatarClick, handleEditProfileClick, handleAddPlaceClick }) {
+function Main({ onEditAvatar, onEditProfile, onAddPlace }) {
   return (
     <main className="content page__content">
       <section className="profile">
-        <div className="profile__avatar-btn" onClick={handleEditAvatarClick}>
+        <div className="profile__avatar-btn" onClick={onEditAvatar}>
           <img src="#" alt="фото пользователя" className="profile__avatar" />
         </div>
         <div className="profile__info">
@@ -14,14 +14,14 @@ function Main({ handleEditAvatarClick, handleEditProfileClick, handleAddPlaceCli
             aria-label="редактировать профиль"
             type="button"
             className="profile__edit-button button"
-            onClick={handleEditProfileClick}
+            onClick={onEditProfile}
           ></button>
         </div>
         <button
           aria-label="добавить место"
           type="button"
           className="profile__add-button button"
-          onClick={handleAddPlaceClick}
+          onClick={onAddPlace}
         ></button>
       </section>
       <section
