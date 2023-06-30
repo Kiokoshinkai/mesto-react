@@ -5,35 +5,65 @@ import Main from "./Main";
 import Footer from "./Footer";
 import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
+import api from "../utils/api";
+import Card from "./Card";
 
 function App() {
-  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
-  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
+  //состояния кнопок попапов
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] =
+    React.useState(false);
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] =
+    React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
+  const [selectedCard, setSelectedCard] = React.useState(false);
+  //состояние карточек
+  const [cards, setCards] = React.useState([]);
+
+
+  function handleCardClick() {
+    return `${selectedCard ? "popup_opened" : ""}`;
+  }
+
 
   //функция установки имени класса для попапов
   function handleClassName(dataState) {
     return `${dataState ? "popup_opened" : ""}`;
   }
 
+  //функция закрытия попапов
   function closeAllPopups() {
-    setIsEditAvatarPopupOpen(false)
-    setIsEditProfilePopupOpen(false)
-    setIsAddPlacePopupOpen(false)
+    setIsEditAvatarPopupOpen(false);
+    setIsEditProfilePopupOpen(false);
+    setIsAddPlacePopupOpen(false);
+    setSelectedCard(false);
   }
+
+
+
+  React.useEffect(() => {
+    api
+      .getInitialCards()
+      .then((res) => {
+        setCards(res);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   return (
     <body className="page">
       <Header logo={headerLogo} />
       <Main
-        onEditAvatar={() =>
-          setIsEditAvatarPopupOpen(true)
-        }
-        onEditProfile={() =>
-          setIsEditProfilePopupOpen(true)
-        }
-        onAddPlace={() =>
-          setIsAddPlacePopupOpen(true)
+        onEditAvatar={() => setIsEditAvatarPopupOpen(true)}
+        onEditProfile={() => setIsEditProfilePopupOpen(true)}
+        onAddPlace={() => setIsAddPlacePopupOpen(true)}
+        children={
+          <>
+            {cards.map((item) => (
+              <Card card={item}
+              onCardClick={handleCardClick}
+              />
+            ))}
+          </>
         }
       />
       <Footer />
@@ -141,7 +171,10 @@ function App() {
         ariaLabel={"удалить карточку"}
         classElement={"popup__form-title_el_title"}
       />
-      <ImagePopup />
+      <ImagePopup
+        card={selectedCard}
+        onClose={closeAllPopups}
+      />
     </body>
   );
 }

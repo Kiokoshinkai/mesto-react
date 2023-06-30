@@ -1,15 +1,37 @@
 import React from "react";
+import api from "../utils/api";
 
-function Main({ onEditAvatar, onEditProfile, onAddPlace }) {
+function Main({ onEditAvatar, onEditProfile, onAddPlace, children }) {
+  //состояния пользовательских данных
+  const [userName, setUserName] = React.useState("");
+  const [userDescription, setUserDescription] = React.useState("");
+  const [userAvatar, setUserAvatar] = React.useState("");
+
+  //первичная установка данных пользователя
+  React.useEffect(() => {
+    api
+      .getUserData()
+      .then((res) => {
+        setUserName(res.name);
+        setUserDescription(res.about);
+        setUserAvatar(res.avatar);
+      })
+      .catch((err) => console.log(err));
+  }, "");
+
   return (
     <main className="content page__content">
       <section className="profile">
         <div className="profile__avatar-btn" onClick={onEditAvatar}>
-          <img src="#" alt="фото пользователя" className="profile__avatar" />
+          <img
+            src={userAvatar}
+            alt="фото пользователя"
+            className="profile__avatar"
+          />
         </div>
         <div className="profile__info">
-          <h1 className="profile__name"></h1>
-          <p className="profile__status"></p>
+          <h1 className="profile__name">{userName}</h1>
+          <p className="profile__status">{userDescription}</p>
           <button
             aria-label="редактировать профиль"
             type="button"
@@ -28,27 +50,7 @@ function Main({ onEditAvatar, onEditProfile, onAddPlace }) {
         aria-label="Фото и названия мест куда можно поехать"
         className="elements content__elements"
       >
-        <template className="card-template">
-          <article className="card">
-            <button
-              name="trash"
-              type="button"
-              className="card__trash button"
-            ></button>
-            <img src="#" alt="место" className="card__image" />
-            <div className="card__form">
-              <h2 className="card__title"></h2>
-              <div className="card__like-container">
-                <button
-                  name="like"
-                  type="button"
-                  className="card__like"
-                ></button>
-                <p className="card__like-counter">0</p>
-              </div>
-            </div>
-          </article>
-        </template>
+        {children}
       </section>
     </main>
   );
