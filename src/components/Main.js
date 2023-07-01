@@ -1,11 +1,14 @@
 import React from "react";
 import api from "../utils/api";
+import Card from "./Card";
 
-function Main({ onEditAvatar, onEditProfile, onAddPlace, children }) {
+function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick }) {
   //состояния пользовательских данных
   const [userName, setUserName] = React.useState("");
   const [userDescription, setUserDescription] = React.useState("");
   const [userAvatar, setUserAvatar] = React.useState("");
+  //состояние карточек
+  const [cards, setCards] = React.useState([]);
 
   //первичная установка данных пользователя
   React.useEffect(() => {
@@ -18,6 +21,16 @@ function Main({ onEditAvatar, onEditProfile, onAddPlace, children }) {
       })
       .catch((err) => console.log(err));
   }, "");
+
+  //запрос данных о карточках
+  React.useEffect(() => {
+    api
+      .getInitialCards()
+      .then((res) => {
+        setCards(res);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   return (
     <main className="content page__content">
@@ -50,7 +63,9 @@ function Main({ onEditAvatar, onEditProfile, onAddPlace, children }) {
         aria-label="Фото и названия мест куда можно поехать"
         className="elements content__elements"
       >
-        {children}
+        {cards.map((item) => (
+          <Card card={item} onCardClick={onCardClick} />
+        ))}
       </section>
     </main>
   );

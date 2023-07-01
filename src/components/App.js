@@ -5,8 +5,6 @@ import Main from "./Main";
 import Footer from "./Footer";
 import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
-import api from "../utils/api";
-import Card from "./Card";
 
 function App() {
   //состояния кнопок попапов
@@ -15,15 +13,11 @@ function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] =
     React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
-  const [selectedCard, setSelectedCard] = React.useState(false);
-  //состояние карточек
-  const [cards, setCards] = React.useState([]);
+  const [selectedCard, setSelectedCard] = React.useState(null);
 
-
-  function handleCardClick() {
-    return `${selectedCard ? "popup_opened" : ""}`;
+  function handleCardClick(card) {
+    setSelectedCard(card);
   }
-
 
   //функция установки имени класса для попапов
   function handleClassName(dataState) {
@@ -35,19 +29,8 @@ function App() {
     setIsEditAvatarPopupOpen(false);
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
-    setSelectedCard(false);
+    setSelectedCard(null);
   }
-
-
-
-  React.useEffect(() => {
-    api
-      .getInitialCards()
-      .then((res) => {
-        setCards(res);
-      })
-      .catch((err) => console.log(err));
-  }, []);
 
   return (
     <body className="page">
@@ -56,15 +39,7 @@ function App() {
         onEditAvatar={() => setIsEditAvatarPopupOpen(true)}
         onEditProfile={() => setIsEditProfilePopupOpen(true)}
         onAddPlace={() => setIsAddPlacePopupOpen(true)}
-        children={
-          <>
-            {cards.map((item) => (
-              <Card card={item}
-              onCardClick={handleCardClick}
-              />
-            ))}
-          </>
-        }
+        onCardClick={handleCardClick}
       />
       <Footer />
       <PopupWithForm
@@ -171,10 +146,7 @@ function App() {
         ariaLabel={"удалить карточку"}
         classElement={"popup__form-title_el_title"}
       />
-      <ImagePopup
-        card={selectedCard}
-        onClose={closeAllPopups}
-      />
+      <ImagePopup card={selectedCard} onClose={closeAllPopups} />
     </body>
   );
 }

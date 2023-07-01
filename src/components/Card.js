@@ -1,7 +1,6 @@
 import React from "react";
 
 function Card({ card, onCardClick }) {
-
   function handleClick() {
     onCardClick(card);
   }
@@ -13,7 +12,12 @@ function Card({ card, onCardClick }) {
         type="button"
         className="card__trash button"
       ></button>
-      <img src={card.link} alt={`${card.name}`} className="card__image" />
+      <img
+        src={card.link}
+        alt={`${card.name}`}
+        className="card__image"
+        onClick={handleClick}
+      />
       <div className="card__form">
         <h2 className="card__title">{card.name}</h2>
         <div className="card__like-container">
