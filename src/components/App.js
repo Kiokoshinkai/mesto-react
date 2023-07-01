@@ -33,7 +33,7 @@ function App() {
   }
 
   return (
-    <body className="page">
+    <div className="page">
       <Header logo={headerLogo} />
       <Main
         onEditAvatar={() => setIsEditAvatarPopupOpen(true)}
@@ -58,8 +58,8 @@ function App() {
               placeholder="Имя"
               required
               className="popup__form-item popup__form-item_el_name"
-              minlength="2"
-              maxlength="40"
+              minLength="2"
+              maxLength="40"
             />
             <span className="name-input-error popup__form-error">
               Вы пропустили это поле.
@@ -71,8 +71,8 @@ function App() {
               placeholder="О себе"
               required
               className="popup__form-item popup__form-item_el_status"
-              minlength="2"
-              maxlength="200"
+              minLength="2"
+              maxLength="200"
             />
             <span className="status-input-error popup__form-error">
               Вы пропустили это поле.
@@ -96,8 +96,8 @@ function App() {
               placeholder="Название"
               required
               className="popup__form-item popup__form-item_el_place-name"
-              minlength="2"
-              maxlength="30"
+              minLength="2"
+              maxLength="30"
             />
             <span className="place-name-error popup__form-error">
               Вы пропустили это поле.
@@ -147,7 +147,7 @@ function App() {
         classElement={"popup__form-title_el_title"}
       />
       <ImagePopup card={selectedCard} onClose={closeAllPopups} />
-    </body>
+    </div>
   );
 }
 

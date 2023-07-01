@@ -22,7 +22,7 @@ function PopupWithForm({
         <form
           name={name}
           className={`popup__form popup__form_el_${name}`}
-          novalidate
+          noValidate
         >
           <h2 className={`popup__form-title ${classElement}`}>{title}</h2>
           {children}

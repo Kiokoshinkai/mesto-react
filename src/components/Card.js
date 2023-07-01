@@ -6,7 +6,7 @@ function Card({ card, onCardClick }) {
   }
 
   return (
-    <article className="card">
+    <article className="card" key={card._id}>
       <button
         name="trash"
         type="button"
