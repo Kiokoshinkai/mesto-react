@@ -20,7 +20,7 @@ function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick }) {
         setUserAvatar(res.avatar);
       })
       .catch((err) => console.log(err));
-  }, "");
+  }, []);
 
   //запрос данных о карточках
   React.useEffect(() => {
