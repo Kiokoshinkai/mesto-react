@@ -80,6 +80,14 @@ class Api {
     }).then(this._getResponseData);
   }
 
+  //для управления лайками
+  changeLikeCardStatus(id, isLiked) {
+    if (isLiked) {
+      return api.addLike(id);
+    }
+    return api.deleteLike(id);
+  }
+
   editAvatar(data) {
     return fetch(this._url + `users/me/avatar`, {
       method: "PATCH",
