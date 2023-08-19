@@ -28,4 +28,4 @@
 
 **Ссылка на проект**
 
-* [Mesto](https://kiokoshinkai.github.io/mesto/)
+* [Mesto](https://kiokoshinkai.github.io/mesto-react/)
